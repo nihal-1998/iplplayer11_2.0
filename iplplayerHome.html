@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/7e616dc78b.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Mukta+Malar:400,500,600" rel="stylesheet" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" /> 
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+
+ 
+ <script>
+var tabs = $('.tabs');
+var selector = $('.tabs').find('a').length;
+//var selector = $(".tabs").find(".selector");
+var activeItem = tabs.find('.active');
+var activeWidth = activeItem.innerWidth();
+$(".selector").css({
+  "left": activeItem.position.left + "px", 
+  "width": activeWidth + "px"
+});
+
+$(".tabs").on("click","a",function(e){
+  e.preventDefault();
+  $('.tabs a').removeClass("active");
+  $(this).addClass('active');
+  var activeWidth = $(this).innerWidth();
+  var itemPos = $(this).position();
+  $(".selector").css({
+    "left":itemPos.left + "px", 
+    "width": activeWidth + "px"
+  });
+});
+
+</script>
+	<style>
+	@import url('https://fonts.googleapis.com/css?family=Roboto');
+#leagueSelect{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  font-family: 'Roboto', sans-serif;
+}
+
+h2{
+  margin:0px;
+  text-transform: uppercase;
+}
+
+h6{
+  margin:0px;
+  color:#777;
+}
+
+.wrapper{
+  text-align:center;
+  margin:50px auto;
+}
+
+.tabs{
+  margin-top:50px;
+  font-size:15px;
+  padding:0px;
+  list-style:none;
+  background:#fff;
+  box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+  display:inline-block;
+  border-radius:50px;
+  position:relative;
+}
+
+.tabs a{
+  text-decoration:none;
+  color: #777;
+  text-transform:uppercase;
+  padding:10px 20px;
+  display:inline-block;
+  position:relative;
+  z-index:1;
+  transition-duration:0.6s;
+}
+
+.tabs a.active{
+  color:#fff;
+}
+
+.tabs a i{
+  margin-right:5px;
+}
+
+.tabs .selector{
+  height:100%;
+  display:inline-block;
+  position:absolute;
+  left:0px;
+  top:0px;
+  z-index:1;
+  border-radius:50px;
+  transition-duration:0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  background: #05abe0;
+  background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+  background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+  background: linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#05abe0', endColorstr='#8200f4',GradientType=1 );
+}
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 55px;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  opacity: 1;
+}
+
+img {
+  opacity: 0.5;
+}
+
+img:focus {
+  opacity: 1;
+}
+
+#sitelink {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Roboto Mono", monospace;
+}
+
+
+/* End of Page styling */
+
+
+/* Fill button styling */
+.fill {
+	 margin: 15px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 1px 20px 6px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.fill::after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+/* End of Fill Button  */
+
+.simple {
+	 margin: 15px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 1px 20px 6px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.simple::after {
+  content: "";
+  background-color: #dcbaff;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+   transition: 0.2s;
+}
+.simple:hover::after {
+  top: 0px;
+  left: 0px;
+}
+
+:root {
+
+    --input-color: #99A3BA;
+    --input-border: #CDD9ED;
+    --input-background: #fff;
+    --input-placeholder: #CBD1DC;
+
+    --input-border-focus: #275EFE;
+
+    --group-color: var(--input-color);
+    --group-border: var(--input-border);
+    --group-background: #EEF4FF;
+
+    --group-color-focus: #fff;
+    --group-border-focus: var(--input-border-focus);
+    --group-background-focus: #678EFE;
+
+}
+
+.form-field {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    -webkit-appearance: none;
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    background: var(--input-background);
+    transition: border .3s ease;
+ 
+}
+placeholder{
+        color: var(--input-placeholder);
+    }
+.form-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+    .form-field {
+        position: relative;
+        z-index: 1;
+        flex: 1 1 auto;
+        width: 1%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    span {
+    	width: 75px !important;
+        text-align: center;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 25px;
+        color: var(--group-color);
+        background: var(--group-background);
+        border: 1px solid var(--group-border);
+        transition: background .3s ease, border .3s ease, color .3s ease;
+    }
+    span:hover::after {
+        
+            color: var(--group-color-focus);
+            background: var(--group-background-focus);
+            border-color: var(--group-border-focus);
+        }
+    
+
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    box-sizing: inherit;
+    &:before,
+ 
+}
+
+// Center
+#divBatBall {
+    min-height: 100vh;
+    font-family: 'Mukta Malar', Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #F5F9FF;  
+}
+
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #000;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+/* 1 */
+.btn-1 {
+  transition: all 0.3s ease;
+}
+
+.span-header{
+        width: 100% !important;
+        cursor: pointer;
+        text-align: center;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 25px;
+        color: var(--group-color-focus);
+        background: var(--group-background-focus);
+        border: 1px solid var(--group-border-focus);
+        transition: background .3s ease, border .3s ease, color .3s ease;
+}
+
+#batvsballResponseTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#batvsballResponseTable td, #batvsballResponseTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#batvsballResponseTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#batvsballResponseTable tr:hover {background-color: #ddd;}
+
+#batvsballResponseTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #666699;
+  color: white;
+}
+.show-div {
+  display: block;
+}
+.hide-div {
+  display: none;
+}
+</style>
+<script>
+function selectDataset(datasetType)
+{
+   document.getElementById("selectedLeaguage").innerHTML = datasetType;
+   document.getElementById("selectedLeaguage").value = datasetType;
+}
+
+function showMydiv(id)
+{
+   $('.ActionDiv').addClass('hide-div');
+   $('#'+id).removeClass('hide-div');
+}
+
+function BatvsVenueClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var batsman = document.getElementById("batsmanBatvsVenue").value;
+var venue = document.getElementById("venueBatvsVenue").value;
+var entry = {
+            leaguageName: leaguage,
+            batsmanName: batsman,
+            venueName: venue
+        };
+
+fetch("/batVsVenue", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("batvsVenuecenturies").innerHTML = data.centuries;
+          document.getElementById("batvsVenueHcenturies").innerHTML = data.halfCen;
+          document.getElementById("batvsVenueTotalRuns").innerHTML = data.totalrun;
+          document.getElementById("batvsVenueInnings").innerHTML = data.innings;
+          document.getElementById("batvsVenueOuts").innerHTML = data.outs;
+          
+          var strikRate = data.strikerate;
+          var Avg = data.average;
+          document.getElementById("batvsVenueAverage").innerHTML = String(Avg).substr(0, 6);
+          document.getElementById("batvsVenueSR").innerHTML = String(strikRate).substr(0, 6);
+          $('#BatvsVenueResponse').removeClass('hide-div');
+
+        
+          console.log(data);
+        }).catch(function(error){
+          document.getElementById("batvsVenuecenturies").innerHTML = '--';
+          document.getElementById("batvsVenueHcenturies").innerHTML = '--';
+          document.getElementById("batvsVenueTotalRuns").innerHTML ='--';
+          document.getElementById("batvsVenueInnings").innerHTML = '--';
+          document.getElementById("batvsVenueOuts").innerHTML = '--';
+          document.getElementById("batvsVenueAverage").innerHTML = '--';
+          document.getElementById("batvsVenueSR").innerHTML = '--';
+          $('#BatvsVenueResponse').removeClass('hide-div');
+
+          console.log("Fetch error: " + error)});
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+
+function BatvsBallClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var batsman = document.getElementById("batsmanBatvsBall").value;
+var bowler = document.getElementById("bowlerBatvsBall").value;
+var entry = {
+            leaguageName: leaguage,
+            batsmanName: batsman,
+            bowlerName: bowler
+        };
+
+fetch("/batVsBall", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("batvsballRuns").innerHTML = data.runs;
+          document.getElementById("batvsballBalls").innerHTML = data.balls;
+          document.getElementById("batvsballOuts").innerHTML = data.out;
+
+           var strikRate = data.strikeRate;
+       
+          document.getElementById("batvsballSR").innerHTML = String(strikRate).substr(0, 6);
+           $('#batvsballResponse').removeClass('hide-div');
+
+
+          console.log(data);
+        });
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+function BallvsVenueClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var bowler = document.getElementById("bowlerBallvsVenue").value;
+var venue = document.getElementById("venueBallvsVenue").value;
+var entry = {
+            leaguageName: leaguage,
+            bowlerName: bowler,
+            venue: venue
+        };
+
+fetch("/ballVsVenue", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("ballvsVenueInnings").innerHTML = data.numberOfinnings;
+          document.getElementById("ballvsVenueRuns").innerHTML = data.totalruns;
+          document.getElementById("ballvsVenueWickets").innerHTML = data.totalwickets;
+
+           var average = data.average;
+           var economy = data.economy;
+       
+          document.getElementById("ballvsVenueAverage").innerHTML = String(average).substr(0, 6);
+          document.getElementById("ballvsVenueEconomy").innerHTML = String(economy).substr(0, 6);
+           $('#BallvsVenueResponse').removeClass('hide-div');
+
+
+          console.log(data);
+        }).catch(function(error){
+          document.getElementById("ballvsVenueInnings").innerHTML = '--';
+          document.getElementById("ballvsVenueRuns").innerHTML = '--';
+          document.getElementById("ballvsVenueWickets").innerHTML ='--';
+          document.getElementById("ballvsVenueAverage").innerHTML = '--';
+          document.getElementById("ballvsVenueEconomy").innerHTML = '--';
+          $('#BallvsVenueResponse').removeClass('hide-div');
+          console.log("Fetch error: " + error)});
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+
+
+function hideActionDiv(){
+  $('.ActionDiv').addClass('hide-div');
+}
+</script>
+</head>
+<body onload="hideActionDiv();">
+	<form>
+		<div id="leagueSelect" style="height: 50px;float: left;">
+<div class="wrapper" style="margin-top: 0px;margin-bottom: 0px;">
+  <nav class="tabs" style="padding: 5px;">
+    <div class="selector"></div>
+    <a href="#" ><img class="focus" src="{{ url_for ('static', filename = 'img/iplHome.PNG') }}" onclick="selectDataset('IPL')"></a>
+    <a href="#" class="focus"><img src="{{ url_for ('static', filename = 'img/bigbashHome.jpg') }}" onclick="selectDataset('BBL')"></a>
+    <a href="#" class="focus"><img src="{{ url_for ('static', filename = 'img/t20iHome.jpg') }}" onclick="selectDataset('T20i')"></a>
+  </nav>
+</div>
+</div>
+<table style="float:right;">
+<tr>
+<td>
+
+<div id="leagueSelect" style="height: 50px;float:right;">
+<div class="tabs" style="background-color: lavender;padding: 10px;">
+	<table>
+		<tr><td>
+  <label>Selected Leaguage:</label> </td><td> <label id="selectedLeaguage" name="selectedLeaguage" style="margin-left:-25px;">----</label></td></tr>
+  <tr><td>
+  <label>Selected Analysis-Type:</label> </td> <td><label id="selectedType">----</label></td>
+</tr></table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+
+<div id="divBatBall" style="float:right; margin-top:80px;" class="ActionDiv">
+  <table>
+    <tr>
+      <td>
+        <div id="batvsballResponse" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>Runs</label>
+           </th>
+           <th>
+           
+              <label>Balls</label>
+          </th>
+          <th>
+              <label>Outs</label>
+            </th>
+            <th>
+              <label>Strik Rate</label>
+           </th>
+          </tr>
+          <tr>
+            <td>
+               <label id="batvsballRuns"></label>
+              </td>
+                 <td>
+               <label id="batvsballBalls"></label>
+              </td>
+                 <td>
+               <label id="batvsballOuts"></label>
+              </td>
+                 <td>
+               <label id="batvsballSR"></label>
+              </td>
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+	<div class="form-group" style="margin-top:10px;">
+    <span>Batsman</span>
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBall" placeholder="Enter batsman name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+	 <span>Bowler</span>
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBall" placeholder="Enter bowler name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+	<button type="button" class="span-header" onclick="BatvsBallClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<div id="divBallvsVenue" style="float:right; margin-top:80px;" class="ActionDiv">
+	 <table>
+    <tr>
+      <td>
+        <div id="BallvsVenueResponse" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>innings</label>
+           </th>
+           <th>
+           
+              <label>total runs</label>
+          </th>
+          <th>
+              <label>total wickets</label>
+            </th>
+            <th>
+              <label>average</label>
+           </th>
+           <th>
+           
+              <label>economy</label>
+          </th>
+         
+          </tr>
+          <tr>
+            <td>
+               <label id="ballvsVenueInnings"></label>
+              </td>
+                 <td>
+               <label id="ballvsVenueRuns"></label>
+              </td>
+                 <td>
+               <label id="ballvsVenueWickets"></label>
+              </td>
+                 <td>
+               <label id="ballvsVenueAverage"></label>
+              </td>
+               <td>
+               <label id="ballvsVenueEconomy"></label>
+              </td>
+              
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+  <div class="form-group" style="margin-top:10px;">
+    <span>Bowler</span>
+    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsVenue" placeholder="Enter bowler name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Venue</span>
+    <input class="form-field" type="text" name = "venue" id="venueBallvsVenue" placeholder="Enter Venue name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+  <button type="button" class="span-header" onclick="BallvsVenueClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="divBatvsVenue" style="float:right; margin-top:80px;" class="ActionDiv">
+   <table>
+    <tr>
+      <td>
+        <div id="BatvsVenueResponse" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>centuries</label>
+           </th>
+           <th>
+           
+              <label>half-centuries</label>
+          </th>
+          <th>
+              <label>strike rate</label>
+            </th>
+            <th>
+              <label>total run</label>
+           </th>
+           <th>
+           
+              <label>innings</label>
+          </th>
+          <th>
+              <label>outs</label>
+            </th>
+            <th>
+              <label>average</label>
+           </th>
+          </tr>
+          <tr>
+            <td>
+               <label id="batvsVenuecenturies"></label>
+              </td>
+                 <td>
+               <label id="batvsVenueHcenturies"></label>
+              </td>
+                 <td>
+               <label id="batvsVenueSR"></label>
+              </td>
+                 <td>
+               <label id="batvsVenueTotalRuns"></label>
+              </td>
+               <td>
+               <label id="batvsVenueInnings"></label>
+              </td>
+               <td>
+               <label id="batvsVenueOuts"></label>
+              </td>
+               <td>
+               <label id="batvsVenueAverage"></label>
+              </td>
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+  <div class="form-group" style="margin-top:10px;">
+    <span>Batsman</span>
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsVenue" placeholder="Enter batsman name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Venue</span>
+    <input class="form-field" type="text" name = "venue" id="venueBatvsVenue" placeholder="Enter Venue name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+  <button type="button" class="span-header" onclick="BatvsVenueClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+
+
+<div style="" class="ActionDiv">
+</div>
+<div style="" class="ActionDiv">
+</div>
+<div style="" class="ActionDiv">
+</div>
+</div>
+</td>
+</tr>
+</table>
+
+<div id="sitelink" style="float: left;margin-top: 20px;position: fixed;">
+<table class="tabs" style="background-color: transparent;">
+	<tr>
+    <th style="font-size:17px;">Manual <i class="far fa-lightbulb" style="font-size:22px;color: #dcbaff;"></i></th>
+    <th style="font-size:17px;">Smart <i class="fas fa-lightbulb" style="font-size:22px;color:yellow;"></i></th>
+  </tr>
+	<tr>
+		<td>
+<button type="button" class="simple" id="manualBatvsBall" onclick="showMydiv('divBatBall');">Bat-Ball </button>
+</td>
+<td>
+<button type="button" class="fill">Bat-Ball</button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple" id="manualBatvsVenue" onclick="showMydiv('divBatvsVenue');">Bat-Venue</button>
+</td>
+<td>
+<button type="button" class="fill">Bat-Venue</button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple" id="manualBallvsVenue" onclick="showMydiv('divBallvsVenue');">Ball-Venue</button>
+</td>
+<td>
+<button type="button" class="fill">Ball-Venue</button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple">ALL</button>
+</td>
+<td>
+<button type="button" class="fill">Bat-Indepth</button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple">Bat-Team</button>
+</td>
+<td>
+<button type="button" class="fill">Ball-Indepth</button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple">Ball-Team</button>
+</td>
+<td>
+<button type="button" class="fill">---</button>
+</td>
+</tr>
+	</div>
+
+
+
+</form>
+</body>
+</html
