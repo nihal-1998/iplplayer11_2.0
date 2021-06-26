@@ -180,7 +180,7 @@ img:focus {
 /* End of Fill Button  */
 
 .simple {
-	 margin: 15px;
+	 margin: 8px;
   font-family: inherit;
   font-size: 20px;
   font-weight: 200;
@@ -531,6 +531,171 @@ fetch("/ballVsVenue", {
 
 }
 
+function BatvsBallVenueClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var batsman = document.getElementById("batsmanBatvsBallvenue").value;
+var bowler = document.getElementById("bowlerBatvsBallvenue").value;
+var venue = document.getElementById("venueBatvsBallvenue").value;
+var entry = {
+            leaguageName: leaguage,
+            batsmanName: batsman,
+            bowlerName: bowler,
+            venue: venue
+        };
+
+fetch("/batVsBallInvVenue", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("batballvenueRuns").innerHTML = data.runs;
+          document.getElementById("batballvenueBalls").innerHTML = data.balls;
+          document.getElementById("batballvenueOuts").innerHTML = data.out;
+
+           var SR = data.strikerate;
+         
+          document.getElementById("batballvenueSR").innerHTML = String(SR).substr(0, 6);
+           $('#divBatBallVenueResponce').removeClass('hide-div');
+
+
+          console.log(data);
+        }).catch(function(error){
+          document.getElementById("batballvenueRuns").innerHTML = '--';
+          document.getElementById("batballvenueBalls").innerHTML = '--';
+          document.getElementById("batballvenueOuts").innerHTML ='--';
+          document.getElementById("batballvenueSR").innerHTML = '--';
+         
+          $('#divBatBallVenueResponce').removeClass('hide-div');
+          console.log("Fetch error: " + error)});
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+function BatvsTeamClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var batsman = document.getElementById("batsmanBatvsTeam").value;
+var team = document.getElementById("TeamBatvsTeam").value;
+var entry = {
+            leaguageName: leaguage,
+            batsmanName: batsman,
+            team: team
+        };
+
+fetch("/batVsteam", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("BatvsTeamcenturies").innerHTML = data.centuries;
+          document.getElementById("BatvsTeamHcenturies").innerHTML = data.halfcenturies;
+          document.getElementById("BatvsTeamTotalRuns").innerHTML = data.totalrun;
+          document.getElementById("BatvsTeamInnings").innerHTML = data.innings;
+          document.getElementById("BatvsTeamOuts").innerHTML = data.outs;
+          
+          var strikRate = data.strikerate;
+          var Avg = data.average;
+          document.getElementById("BatvsTeamAverage").innerHTML = String(Avg).substr(0, 6);
+          document.getElementById("BatvsTeamSR").innerHTML = String(strikRate).substr(0, 6);
+          $('#divBatvsTeamResponce').removeClass('hide-div');
+
+        
+          console.log(data);
+        }).catch(function(error){
+          document.getElementById("BatvsTeamcenturies").innerHTML = '--';
+          document.getElementById("BatvsTeamHcenturies").innerHTML = '--';
+          document.getElementById("BatvsTeamTotalRuns").innerHTML ='--';
+          document.getElementById("BatvsTeamInnings").innerHTML = '--';
+          document.getElementById("BatvsTeamOuts").innerHTML = '--';
+          document.getElementById("BatvsTeamAverage").innerHTML = '--';
+          document.getElementById("BatvsTeamSR").innerHTML = '--';
+          $('#divBatvsTeamResponce').removeClass('hide-div');
+
+          console.log("Fetch error: " + error)});
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+function BallvsTeamClick()
+{
+var leaguage = document.getElementById("selectedLeaguage").value;
+var bowler = document.getElementById("bowlerBallvsTeam").value;
+var team = document.getElementById("TeamBallvsTeam").value;
+var entry = {
+            leaguageName: leaguage,
+            bowlerName: bowler,
+            team: team
+        };
+
+fetch("/ballVsteam", {
+      method: "POST",
+      cache: "no-cache",
+       body: JSON.stringify(entry),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${response.status}`);
+          return;
+        }
+        response.json().then(function (data) {
+          document.getElementById("BallvsTeaminnings").innerHTML = data.innings;
+          document.getElementById("BallvsTeamTotalRuns").innerHTML = data.totalruns;
+          document.getElementById("BallvsTeamWickets").innerHTML = data.totalwickets;
+          
+          var economy = data.economy;
+          var Avg = data.average;
+          document.getElementById("BallvsTeamAverage").innerHTML = String(Avg).substr(0, 6);
+          document.getElementById("BallvsTeamEconomy").innerHTML = String(economy).substr(0, 6);
+          $('#divBallvsTeamResponce').removeClass('hide-div');
+
+        
+          console.log(data);
+        }).catch(function(error){
+          document.getElementById("BallvsTeaminnings").innerHTML = '--';
+          document.getElementById("BallvsTeamTotalRuns").innerHTML = '--';
+          document.getElementById("BallvsTeamWickets").innerHTML ='--';
+          document.getElementById("BallvsTeamAverage").innerHTML = '--';
+          document.getElementById("BallvsTeamEconomy").innerHTML = '--';
+      
+          $('#divBallvsTeamResponce').removeClass('hide-div');
+
+          console.log("Fetch error: " + error)});
+      })
+      .catch(function (error) {
+        console.log("Fetch error: " + error);
+      });
+
+}
+
+
 
 
 function hideActionDiv(){
@@ -568,6 +733,222 @@ function hideActionDiv(){
 </tr>
 <tr>
 <td>
+
+<div id="divBallvsTeam" style="float:right; margin-top:80px;" class="ActionDiv">
+   <table>
+    <tr>
+      <td>
+        <div id="divBallvsTeamResponce" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>innings</label>
+           </th>
+           <th>
+           
+              <label>total run</label>
+          </th>
+          <th>
+              <label>total wickets</label>
+            </th>
+            <th>
+              <label>average</label>
+           </th>
+           <th>
+           
+              <label>economy</label>
+          </th>
+         
+          </tr>
+          <tr>
+            <td>
+               <label id="BallvsTeaminnings"></label>
+              </td>
+                 <td>
+               <label id="BallvsTeamTotalRuns"></label>
+              </td>
+                 <td>
+               <label id="BallvsTeamWickets"></label>
+              </td>
+                 <td>
+               <label id="BallvsTeamAverage"></label>
+              </td>
+               <td>
+               <label id="BallvsTeamEconomy"></label>
+              </td>
+              
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler Vs Team <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+  <div class="form-group" style="margin-top:10px;">
+    <span>Bowler</span>
+    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsTeam" placeholder="Enter bowler name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Team</span>
+    <input class="form-field" type="text" name = "team" id="TeamBallvsTeam" placeholder="Enter Team name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+  <button type="button" class="span-header" onclick="BallvsTeamClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+
+
+
+<div id="divBatvsTeam" style="float:right; margin-top:80px;" class="ActionDiv">
+   <table>
+    <tr>
+      <td>
+        <div id="divBatvsTeamResponce" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>centuries</label>
+           </th>
+           <th>
+           
+              <label>half-centuries</label>
+          </th>
+          <th>
+              <label>strike rate</label>
+            </th>
+            <th>
+              <label>total run</label>
+           </th>
+           <th>
+           
+              <label>innings</label>
+          </th>
+          <th>
+              <label>outs</label>
+            </th>
+            <th>
+              <label>average</label>
+           </th>
+          </tr>
+          <tr>
+            <td>
+               <label id="BatvsTeamcenturies"></label>
+              </td>
+                 <td>
+               <label id="BatvsTeamHcenturies"></label>
+              </td>
+                 <td>
+               <label id="BatvsTeamSR"></label>
+              </td>
+                 <td>
+               <label id="BatvsTeamTotalRuns"></label>
+              </td>
+               <td>
+               <label id="BatvsTeamInnings"></label>
+              </td>
+               <td>
+               <label id="BatvsTeamOuts"></label>
+              </td>
+               <td>
+               <label id="BatvsTeamAverage"></label>
+              </td>
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Team <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+  <div class="form-group" style="margin-top:10px;">
+    <span>Batsman</span>
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsTeam" placeholder="Enter batsman name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Team</span>
+    <input class="form-field" type="text" name = "team" id="TeamBatvsTeam" placeholder="Enter Team name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+  <button type="button" class="span-header" onclick="BatvsTeamClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+
+
+
+
+<div id="divBatBallVenue" style="float:right; margin-top:80px;" class="ActionDiv">
+  <table>
+    <tr>
+      <td>
+        <div id="divBatBallVenueResponce" class="hide-div" style="padding-right: 60px;">
+          <table id = "batvsballResponseTable"><tr> 
+            <th>
+             
+              <label>Runs</label>
+           </th>
+           <th>
+           
+              <label>Balls</label>
+          </th>
+          <th>
+              <label>Outs</label>
+            </th>
+            <th>
+              <label>Strik Rate</label>
+           </th>
+          </tr>
+          <tr>
+            <td>
+               <label id="batballvenueRuns"></label>
+              </td>
+                 <td>
+               <label id="batballvenueBalls"></label>
+              </td>
+                 <td>
+               <label id="batballvenueOuts"></label>
+              </td>
+                 <td>
+               <label id="batballvenueSR"></label>
+              </td>
+          </tr>
+          </table>
+        </div>
+      </td>
+      <td>
+<div>
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bat vs Ball in Venue <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+</div>
+  <div class="form-group" style="margin-top:10px;">
+    <span>Batsman</span>
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallvenue" placeholder="Enter batsman name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Bowler</span>
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallvenue" placeholder="Enter bowler name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+   <span>Venue</span>
+    <input class="form-field" type="text" name = "venue" id="venueBatvsBallvenue" placeholder="Enter venue name">
+</div>
+<div class="form-group" style="margin-top:7px;">
+  <button type="button" class="span-header" onclick="BatvsBallVenueClick();">Submit</button>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
 
 <div id="divBatBall" style="float:right; margin-top:80px;" class="ActionDiv">
   <table>
@@ -609,7 +990,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Bowler <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
 </div>
 	<div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
@@ -676,7 +1057,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler vs Venue <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Bowler</span>
@@ -754,7 +1135,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Action <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Venue <i class="far fa-pencil" style="font-size:22px;color: #dcbaff;"></i></label> 
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
@@ -794,7 +1175,7 @@ function hideActionDiv(){
   </tr>
 	<tr>
 		<td>
-<button type="button" class="simple" id="manualBatvsBall" onclick="showMydiv('divBatBall');">Bat-Ball </button>
+<button type="button" class="simple" id="manualBatvsBall" title="Batsman vs Bowler" onclick="showMydiv('divBatBall');"><img src="{{ url_for ('static', filename = 'img/BatBall.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">Bat-Ball</button>
@@ -802,7 +1183,7 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple" id="manualBatvsVenue" onclick="showMydiv('divBatvsVenue');">Bat-Venue</button>
+<button type="button" title="Batsman vs Venue" class="simple" id="manualBatvsVenue" onclick="showMydiv('divBatvsVenue');"><img src="{{ url_for ('static', filename = 'img/BatVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">Bat-Venue</button>
@@ -810,7 +1191,7 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple" id="manualBallvsVenue" onclick="showMydiv('divBallvsVenue');">Ball-Venue</button>
+<button type="button" class="simple" title="Bowler vs Venue" id="manualBallvsVenue" onclick="showMydiv('divBallvsVenue');"><img src="{{ url_for ('static', filename = 'img/BallVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">Ball-Venue</button>
@@ -818,7 +1199,7 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple">ALL</button>
+<button type="button" class="simple" title="Batsman vs Bowler in Venue" id="manualBatBallvsVenue" onclick="showMydiv('divBatBallVenue');"><img src="{{ url_for ('static', filename = 'img/AllFinal.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">Bat-Indepth</button>
@@ -826,7 +1207,7 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple">Bat-Team</button>
+<button type="button" class="simple" title="Batsman vs Team" id="manualBatvsTeam" onclick="showMydiv('divBatvsTeam');"><img src="{{ url_for ('static', filename = 'img/BatTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">Ball-Indepth</button>
@@ -834,7 +1215,7 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple">Ball-Team</button>
+<button type="button" class="simple" title="Bowler vs Team" id="manualBallvsTeam" onclick="showMydiv('divBallvsTeam');"><img src="{{ url_for ('static', filename = 'img/BallTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">---</button>

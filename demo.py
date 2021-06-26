@@ -355,198 +355,283 @@ def home_1():
 					#return render_template('batvenue.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,venue1=name2,vs="Vs")
 		
 
-@app.route('/batVsBallInvVenue')
-def my_form_3():
-		return render_template('all.html')
+#@app.route('/batVsBallInvVenue')
+#def my_form_3():
+#		return render_template('all.html')
 			
 @app.route('/batVsBallInvVenue', methods=['POST'])		
 def home_3():
-			batting_first = list()
-			name = request.form['batsman']
-			name2 = request.form['bowler']
-			name3 = request.form['venue']
-			batsman_data_1=delivery_data[(delivery_data.batsman==name)&(delivery_data.bowler==name2)]
-			match_data1 = match_data[(match_data.venue==name3)]
-			if len(match_data1)>0:
-				for venue in match_data1.venue.unique():
-						matches=match_data1[(match_data1.venue==venue)].id
-	# 			        print(matches)
-						runs=0
-						balls=0
-						out = 0
-						for match in matches:
-								runs = 0
-								balls = 0
-								out = 0
-								avg = batsman_data_1[batsman_data_1.match_id==match]
-								t=batsman_data_1[batsman_data_1.match_id==match].batsman_runs.sum()
-								runs=runs+t
-	#           				print(runs)
-								out = out+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.player_dismissed==name)&(batsman_data_1.dismissal_kind!='run out')])
-								balls=balls+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.wide_runs==0)&(batsman_data_1.noball_runs==0)])
-								batting_first=batting_first+[[venue,1,balls,t,out]]
-				batvs_venue = pd.DataFrame(batting_first,columns=['venue','batting first','balls','runs','out'])
-				batsman_venue = batvs_venue[batvs_venue.balls != 0]
-				abc = batsman_venue[batsman_venue.venue==name3]
-				runs = abc.runs.sum()
-				balls = abc.balls.sum()
-				outs = abc.out.sum()
-				strike = (runs/balls)*100
+				req = request.get_json()
+				print(req)
 
-				run1 = np.asarray(runs)
-				df_list = run1.tolist()
+   #        print(delivery_data)
 
-				ball1 = np.asarray(balls)
-				df_list1 = ball1.tolist()
+				name = req["batsmanName"]
+				leaguage = req["leaguageName"]
+				name2 = req["bowlerName"]
+				name3 = req["venue"]
+				print(name)
+				print(leaguage)
+				print(name2)
+				if(leaguage=='IPL'):
+					print('inipl')
+					batsman_data_1= delivery_data[(delivery_data.batsman==name)&(delivery_data.bowler==name2)]
+					match_data1 = match_data[(match_data.venue==name3)]
+				elif (leaguage=='T20i'):
+					print('int20i')
+					batsman_data_1=T20_delivery_data[(T20_delivery_data.batsman==name)&(T20_delivery_data.bowler==name2)]
+					match_data1 = T20_match_data[(T20_match_data.venue==name3)]
 
-				out1 = np.asarray(outs)
-				df_list2 = out1.tolist()
+				batting_first = list()
+				#name = request.form['batsman']
+				#name2 = request.form['bowler']
+				#name3 = request.form['venue']
+				#batsman_data_1=delivery_data[(delivery_data.batsman==name)&(delivery_data.bowler==name2)]
+				#match_data1 = match_data[(match_data.venue==name3)]
+				if len(match_data1)>0:
+					for venue in match_data1.venue.unique():
+							matches=match_data1[(match_data1.venue==venue)].id
+		# 			        print(matches)
+							runs=0
+							balls=0
+							out = 0
+							for match in matches:
+									runs = 0
+									balls = 0
+									out = 0
+									avg = batsman_data_1[batsman_data_1.match_id==match]
+									t=batsman_data_1[batsman_data_1.match_id==match].batsman_runs.sum()
+									runs=runs+t
+		#           				print(runs)
+									out = out+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.player_dismissed==name)&(batsman_data_1.dismissal_kind!='run out')])
+									if(leaguage!='IPL'):
+										balls = balls+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.extra_runs==0)])
+									else:	
+										balls=balls+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.wide_runs==0)&(batsman_data_1.noball_runs==0)])
+									#balls=balls+len(batsman_data_1[(batsman_data_1.match_id==match)&(batsman_data_1.wide_runs==0)&(batsman_data_1.noball_runs==0)])
+									batting_first=batting_first+[[venue,1,balls,t,out]]
+					batvs_venue = pd.DataFrame(batting_first,columns=['venue','batting first','balls','runs','out'])
+					batsman_venue = batvs_venue[batvs_venue.balls != 0]
+					abc = batsman_venue[batsman_venue.venue==name3]
+					runs = abc.runs.sum()
+					balls = abc.balls.sum()
+					outs = abc.out.sum()
+					print(balls)
+					if (balls != 0):
+						strike = (runs/balls)*100
+					else:
+						strike = 00	
 
-				str1 = np.asarray(strike)
-				df_list3 = str1.tolist()
+					run1 = np.asarray(runs)
+					df_list = run1.tolist()
+
+					ball1 = np.asarray(balls)
+					df_list1 = ball1.tolist()
+
+					out1 = np.asarray(outs)
+					df_list2 = out1.tolist()
+
+					str1 = np.asarray(strike)
+					df_list3 = str1.tolist()
 
 
-				answer = {'runs':df_list,'balls':df_list1,'out':df_list2,'strike rate':df_list3}
-				#an = jsonpify(answer)
-				#response = json.dumps(answer, sort_keys = True, indent = 4, separators = (',', ': '))
-				#an=response
-				df = pd.DataFrame(answer,index=['stats'])
-				return render_template('all.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,bowler=name2,venue1=name3,vs="Vs",In="In")
-			else:
-				df_list = '--'
-				df_list1 = '--'
-				df_list2 = '--'
-				df_list3 = '--'
-				answer = {'runs':df_list,'balls':df_list1,'out':df_list2,'strike rate':df_list3}
-				df = pd.DataFrame(answer,index=['stats'])
-				return render_template('all.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,bowler=name2,venue1=name3,vs="Vs",In="In")
+					answer = {'runs':df_list,'balls':df_list1,'out':df_list2,'strikerate':df_list3}
+					print(answer)
+					return jsonpify(answer)
+					#an = jsonpify(answer)
+					#response = json.dumps(answer, sort_keys = True, indent = 4, separators = (',', ': '))
+					#an=response
+					#df = pd.DataFrame(answer,index=['stats'])
+					#return render_template('all.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,bowler=name2,venue1=name3,vs="Vs",In="In")
+				else:
+					df_list = '--'
+					df_list1 = '--'
+					df_list2 = '--'
+					df_list3 = '--'
+					answer = {'runs':df_list,'balls':df_list1,'out':df_list2,'strikerate':df_list3}
+					print(answer)
+					return jsonpify(answer)
+					#df = pd.DataFrame(answer,index=['stats'])
+					#return render_template('all.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,bowler=name2,venue1=name3,vs="Vs",In="In")
 
-@app.route('/batVsteam')
-def my_form_4():
-		return render_template('batvsteam.html')
+#@app.route('/batVsteam')
+#def my_form_4():
+#		return render_template('batvsteam.html')
 			
 @app.route('/batVsteam', methods=['POST'])		
 def home_4():
-			batting_first = list()
-			name = request.form['batsman']
-			name2 = request.form['team']
-			batting_first=list()
-			batsman_data = delivery_data[(delivery_data.batsman==name)&(delivery_data.bowling_team==name2)]
-			balls=len(batsman_data[(batsman_data.wide_runs==0)&(batsman_data.noball_runs==0)])
-			runs1 = batsman_data.batsman_runs.sum()
-			out = len(batsman_data[(batsman_data.player_dismissed==name)])
-			innings = len(batsman_data.match_id.unique())
-			for ids in batsman_data.match_id.unique():
-				runs=0
-				t=batsman_data[batsman_data.match_id==ids].batsman_runs.sum()
-				runs=runs+t
-				batting_first=batting_first+[[runs]]
-			df=pd.DataFrame(data=batting_first,columns=['runs'])
-		#	for ids in match_data.id.unique():
-		#			runs=0
-		#			balls=0
-		#			out=0
-		#			team1 = batsman_data.bowling_team[batsman_data.match_id==ids].unique()
-            #  print(batsman_data)
-            #print(ids1)
-            #team1 = match_data[match_data.id==ids1].team1
-            #team2 = match_data[match_data.id==ids1].team2
-			#		t=batsman_data[batsman_data.match_id==ids].batsman_runs.sum()
-			#		runs=runs+t
-			#		out = out+len(batsman_data[(batsman_data.match_id==ids)&(batsman_data.player_dismissed==name)])
-			#		balls=balls+len(batsman_data[(batsman_data.match_id==ids)&(batsman_data.wide_runs==0)&(batsman_data.noball_runs==0)])
-			#		batting_first=batting_first+[[team1,1,balls,runs,out]]
+				req = request.get_json()
+				print(req)
+
+   #        print(delivery_data)
+
+				name = req["batsmanName"]
+				leaguage = req["leaguageName"]
+				name2 = req["team"]
+				
+				print(name)
+				print(leaguage)
+				print(name2)
+				if(leaguage=='IPL'):
+					print('inipl')
+					batsman_data= delivery_data[(delivery_data.batsman==name)&(delivery_data.bowling_team==name2)]
+					
+				elif (leaguage=='T20i'):
+					print('int20i')
+					batsman_data=T20_delivery_data[(T20_delivery_data.batsman==name)&(T20_delivery_data.bowling_team==name2)]
+				
+
+				batting_first = list()
+				#name = request.form['batsman']
+				#name2 = request.form['team']
+				#batting_first=list()
+				#batsman_data = delivery_data[(delivery_data.batsman==name)&(delivery_data.bowling_team==name2)]
+				if(leaguage!='IPL'):
+					balls = len(batsman_data[(batsman_data.extra_runs==0)])
+				else:	
+					balls=len(batsman_data[(batsman_data.wide_runs==0)&(batsman_data.noball_runs==0)])
+				#balls=len(batsman_data[(batsman_data.wide_runs==0)&(batsman_data.noball_runs==0)])
+				runs1 = batsman_data.batsman_runs.sum()
+				out = len(batsman_data[(batsman_data.player_dismissed==name)])
+				innings = len(batsman_data.match_id.unique())
+				for ids in batsman_data.match_id.unique():
+					runs=0
+					t=batsman_data[batsman_data.match_id==ids].batsman_runs.sum()
+					runs=runs+t
+					batting_first=batting_first+[[runs]]
+				df=pd.DataFrame(data=batting_first,columns=['runs'])
+			#	for ids in match_data.id.unique():
+			#			runs=0
+			#			balls=0
+			#			out=0
+			#			team1 = batsman_data.bowling_team[batsman_data.match_id==ids].unique()
+	            #  print(batsman_data)
+	            #print(ids1)
+	            #team1 = match_data[match_data.id==ids1].team1
+	            #team2 = match_data[match_data.id==ids1].team2
+				#		t=batsman_data[batsman_data.match_id==ids].batsman_runs.sum()
+				#		runs=runs+t
+				#		out = out+len(batsman_data[(batsman_data.match_id==ids)&(batsman_data.player_dismissed==name)])
+				#		balls=balls+len(batsman_data[(batsman_data.match_id==ids)&(batsman_data.wide_runs==0)&(batsman_data.noball_runs==0)])
+				#		batting_first=batting_first+[[team1,1,balls,runs,out]]
 
 
-			#df=pd.DataFrame(data=batting_first,columns=['team1','batting_first','balls','runs','out'])
-			#datatoss = df.drop(['batting_first'],axis = 1) 
-			#abc = datatoss[datatoss.balls!=0] 
-			#abc1 = abc[abc.team1==name2]
-			#runs = abc1.runs.sum()
-			#balls = abc1.balls.sum()
-			#outs = abc1.out.sum()
-			strike = (runs1/balls)*100
-			average = (runs1/out)
-			h_cen = 0
-			cen = 0
-			for fif in df.runs:
-					if((fif>49) & (fif<100)):
-							h_cen = h_cen+1
-					elif(fif>99):
-							cen = cen+1
-			
-			sti1 = np.asarray(strike)
-			df_list2 = sti1.tolist()
-			
-			
-			h_cen1 = np.asarray(h_cen)
-			df_list1 = h_cen1.tolist()
-			
-			
-			cen1 = np.asarray(cen)
-			df_list = cen1.tolist()
-			
-			total_runs1 = np.asarray(runs1)
-			df_list3 = total_runs1.tolist()
-			
-			num_inni1 = np.asarray(innings)
-			df_list4 = num_inni1.tolist()
-			
-			num_out = np.asarray(out)
-			df_list5 = num_out.tolist()
-			
-			num_average = np.asarray(average)
-			df_list6 = num_average.tolist()
-			
-			answer = {'centuries':df_list,'half-centuries':df_list1,'strike rate':df_list2,'total run':df_list3 ,'innings':df_list4,'outs' :df_list5,'average':df_list6}
-			
-			#response = json.dumps(answer, sort_keys = True, indent = 4, separators = (',', ': '))
-			df = pd.DataFrame(answer,index=['stats'])
-			return render_template('batvsteam.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,team1=name2,vss ="Vs")
+				#df=pd.DataFrame(data=batting_first,columns=['team1','batting_first','balls','runs','out'])
+				#datatoss = df.drop(['batting_first'],axis = 1) 
+				#abc = datatoss[datatoss.balls!=0] 
+				#abc1 = abc[abc.team1==name2]
+				#runs = abc1.runs.sum()
+				#balls = abc1.balls.sum()
+				#outs = abc1.out.sum()
+				strike = (runs1/balls)*100
+				average = (runs1/out)
+				h_cen = 0
+				cen = 0
+				for fif in df.runs:
+						if((fif>49) & (fif<100)):
+								h_cen = h_cen+1
+						elif(fif>99):
+								cen = cen+1
+				
+				sti1 = np.asarray(strike)
+				df_list2 = sti1.tolist()
+				
+				
+				h_cen1 = np.asarray(h_cen)
+				df_list1 = h_cen1.tolist()
+				
+				
+				cen1 = np.asarray(cen)
+				df_list = cen1.tolist()
+				
+				total_runs1 = np.asarray(runs1)
+				df_list3 = total_runs1.tolist()
+				
+				num_inni1 = np.asarray(innings)
+				df_list4 = num_inni1.tolist()
+				
+				num_out = np.asarray(out)
+				df_list5 = num_out.tolist()
+				
+				num_average = np.asarray(average)
+				df_list6 = num_average.tolist()
+				
+				answer = {'centuries':df_list,'halfcenturies':df_list1,'strikerate':df_list2,'totalrun':df_list3 ,'innings':df_list4,'outs' :df_list5,'average':df_list6}
+				print(answer)
+				return jsonpify(answer)
+				#response = json.dumps(answer, sort_keys = True, indent = 4, separators = (',', ': '))
+				#df = pd.DataFrame(answer,index=['stats'])
+				#return render_template('batvsteam.html',tables=[df.to_html(classes='data')], titles=df.columns.values,batsman=name,team1=name2,vss ="Vs")
 
 
-@app.route('/ballVsteam')
-def my_form_5():
-		return render_template('ballvsteam.html')
+#@app.route('/ballVsteam')
+#def my_form_5():
+#		return render_template('ballvsteam.html')
 
 @app.route('/ballVsteam', methods=['POST'])		
 def home_5():
-			bowling_first = list()
-			name = request.form['bowler']
-			name2 = request.form['team']
-			bowler_data = delivery_data[(delivery_data.bowler==name)&(delivery_data.batting_team==name2)]
-			wk = 0
-			for wks in bowler_data[(bowler_data.dismissal_kind!='run out')&(bowler_data.dismissal_kind!='')].player_dismissed:
-								if wks!='':
-									wk = wk+1
-			t=bowler_data.total_runs.sum()
-			balls=len(bowler_data[(bowler_data.wide_runs==0)&(bowler_data.noball_runs==0)])
-			innings = len(bowler_data.match_id.unique())
+				req = request.get_json()
+				print(req)
+
+   #        print(delivery_data)
+
+				name = req["bowlerName"]
+				leaguage = req["leaguageName"]
+				name2 = req["team"]
+				
+				print(name)
+				print(leaguage)
+				print(name2)
+				if(leaguage=='IPL'):
+					print('inipl')
+					bowler_data= delivery_data[(delivery_data.bowler==name)&(delivery_data.batting_team==name2)]
+					
+				elif (leaguage=='T20i'):
+					print('int20i')
+					bowler_data=T20_delivery_data[(T20_delivery_data.bowler==name)&(T20_delivery_data.batting_team==name2)]
+
+				bowling_first = list()
+				#name = request.form['bowler']
+				#name2 = request.form['team']
+				#bowler_data = delivery_data[(delivery_data.bowler==name)&(delivery_data.batting_team==name2)]
+				wk = 0
+				for wks in bowler_data[(bowler_data.dismissal_kind!='run out')&(bowler_data.dismissal_kind!='')].player_dismissed:
+									if wks!='':
+										wk = wk+1
+				t=bowler_data.total_runs.sum()
+				if(leaguage!='IPL'):
+					balls = len(bowler_data[(bowler_data.extra_runs==0)])
+				else:	
+					balls=len(bowler_data[(bowler_data.wide_runs==0)&(bowler_data.noball_runs==0)])
+				#balls=len(bowler_data[(bowler_data.wide_runs==0)&(bowler_data.noball_runs==0)])
+				innings = len(bowler_data.match_id.unique())
+				
+				over = (balls/6)
+				economy = (t/over)
+				average = (t/wk)
+
+				num_inni = np.asarray(innings)
+				df_list1 = num_inni.tolist()
+
+				num_runs = np.asarray(t)
+				df_list2 = num_runs.tolist()
+
+				num_wickets = np.asarray(wk)
+				df_list3 = num_wickets.tolist()
+
+				num_average = np.asarray(average)
+				df_list4 = num_average.tolist()
+
+				num_economy = np.asarray(economy)
+				df_list5 = num_economy.tolist()
+				
+				#ball_answer = abc.values.tolist()
 			
-			over = (balls/6)
-			economy = (t/over)
-			average = (t/wk)
-
-			num_inni = np.asarray(innings)
-			df_list1 = num_inni.tolist()
-
-			num_runs = np.asarray(t)
-			df_list2 = num_runs.tolist()
-
-			num_wickets = np.asarray(wk)
-			df_list3 = num_wickets.tolist()
-
-			num_average = np.asarray(average)
-			df_list4 = num_average.tolist()
-
-			num_economy = np.asarray(economy)
-			df_list5 = num_economy.tolist()
-			
-			#ball_answer = abc.values.tolist()
-		
-			answer = {'number of innings':df_list1,'total runs':df_list2,'total wickets':df_list3,'average':df_list4 ,'economy':df_list5}
-			df = pd.DataFrame(answer,index=['stats'])
-			return render_template('ballvsteam.html',tables=[df.to_html(classes='data')], titles=df.columns.values,bowler=name,team1=name2,vs="Vs")
+				answer = {'innings':df_list1,'totalruns':df_list2,'totalwickets':df_list3,'average':df_list4 ,'economy':df_list5}
+				print(answer)
+				return jsonpify(answer)
+				#df = pd.DataFrame(answer,index=['stats'])
+				#return render_template('ballvsteam.html',tables=[df.to_html(classes='data')], titles=df.columns.values,bowler=name,team1=name2,vs="Vs")
 			
 
 @app.route('/selection')
