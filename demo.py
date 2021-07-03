@@ -1107,48 +1107,62 @@ def my_home_10():
 					
 
 
-@app.route('/ballindepth')
-def my_form_11():
-		return render_template('ball_indepth.html')
+#@app.route('/ballindepth')
+#def my_form_11():
+#		return render_template('ball_indepth.html')
 		
 
 @app.route('/ballindepth', methods=['POST'])
 def my_home_11():
-			bowler_final = list()
-			a = request.form['bowler']
-			bowler = list()
-			bowler_data = delivery_data[delivery_data.bowler==a]
-			t=bowler_data.total_runs.sum()
-			balls=len(bowler_data[(bowler_data.wide_runs==0)&(bowler_data.noball_runs==0)])
-			innings = len(bowler_data.match_id.unique())
-			economy = t/(balls/6)
-			out = len(bowler_data[(bowler_data.dismissal_kind!='')&(bowler_data.dismissal_kind!='run out')])
-			print(t,out)
-			if out!=0:
-				wicket_takers = balls/out
-				wicket_takers_final = 1/wicket_takers
-				average = t/out
-			else:
-				wicket_takers_final = '--'
-				average = '--'
-			for i in bowler_data.match_id.unique():
-				out = len(bowler_data[(bowler_data.dismissal_kind!='')&(bowler_data.dismissal_kind!='run out')&(bowler_data.match_id==i)])
-				bowler = bowler + [[i,out]]
-			bowler_ = pd.DataFrame(data=bowler,columns=['match_id','wickets'])
-			wick3 = len(bowler_[bowler_.wickets>=3])
-			if innings!=0:
-				big_wick = wick3/innings
-				short_perfo = ((bowler_.wickets.sum())-(3*wick3))/(innings-wick3)
-				short_perfo_final = 1/short_perfo
-			else:
-				big_wick = '--'
-				short_perfo = '--'
-				short_perfo_final = '--'
-			bowler_final = bowler_final + [[economy,wicket_takers_final,average,big_wick,short_perfo]]
-			bowler_final_ = pd.DataFrame(data=bowler_final,columns=['economy','wicket_takers','average','big_wicket_taker','short_performance'])
-			return render_template('ball_indepth.html',tables=[bowler_final_.to_html(classes='data')],k = a)
-		
-		
+				req = request.get_json()
+				
+				a = req['bowlerName']
+				
+				leaguage = req["leaguageName"]
+
+				bowler_final = list()
+				#a = request.form['bowler']
+				bowler = list()
+				print(a)
+				if(leaguage=='IPL'):
+					bowler_data = delivery_data[delivery_data.bowler==a]
+					t=bowler_data.total_runs.sum()
+					balls=len(bowler_data[(bowler_data.wide_runs==0)&(bowler_data.noball_runs==0)])
+				elif(leaguage=='T20i'):
+					bowler_data = T20_delivery_data[T20_delivery_data.bowler==a]	
+					t=bowler_data.total_runs.sum()
+					balls=len(bowler_data[(bowler_data.extra_runs==0)])
+
+				print(bowler_data)
+				innings = len(bowler_data.match_id.unique())
+				economy = t/(balls/6)
+				out = len(bowler_data[(bowler_data.dismissal_kind!='')&(bowler_data.dismissal_kind!='run out')])
+				print(t,out)
+				if out!=0:
+					wicket_takers = balls/out
+					wicket_takers_final = 1/wicket_takers
+					average = t/out
+				else:
+					wicket_takers_final = '--'
+					average = '--'
+				for i in bowler_data.match_id.unique():
+					out = len(bowler_data[(bowler_data.dismissal_kind!='')&(bowler_data.dismissal_kind!='run out')&(bowler_data.match_id==i)])
+					bowler = bowler + [[i,out]]
+				bowler_ = pd.DataFrame(data=bowler,columns=['match_id','wickets'])
+				wick3 = len(bowler_[bowler_.wickets>=3])
+				if innings!=0:
+					big_wick = wick3/innings
+					short_perfo = ((bowler_.wickets.sum())-(3*wick3))/(innings-wick3)
+					short_perfo_final = 1/short_perfo
+				else:
+					big_wick = '--'
+					short_perfo = '--'
+					short_perfo_final = '--'
+				bowler_final = bowler_final + [[economy,wicket_takers_final,average,big_wick,short_perfo]]
+				bowler_final_ = pd.DataFrame(data=bowler_final,columns=['economy','wicket_takers','average','big_wicket_taker','short_performance'])
+				print(bowler_final_)
+				return jsonpify(bowler = json.loads(bowler_final_.to_json(orient='index')))
+				#return render_template('ball_indepth.html',tables=[bowler_final_.to_html(classes='data')],k = a)
 		
 		
 if __name__=='__main__':
