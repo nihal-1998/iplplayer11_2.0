@@ -414,13 +414,18 @@ function showMydiv(id)
 
 function BatvsVenueClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 $('#BatvsVenueResponse').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
    // $('.loadingGIF').css('filter', 'blur(0px)');
    $('.loadingGIF').css('display', "block");
 
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var batsman = document.getElementById("batsmanBatvsVenue").value;
 var venue = document.getElementById("venueBatvsVenue").value;
 var entry = {
@@ -485,11 +490,16 @@ fetch("/batVsVenue", {
 
 function BatvsBallClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 $('#batvsballResponse').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+
 var batsman = document.getElementById("batsmanBatvsBall").value;
 var bowler = document.getElementById("bowlerBatvsBall").value;
 var entry = {
@@ -536,12 +546,17 @@ fetch("/batVsBall", {
 
 function BallvsVenueClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 
 $('#BallvsVenueResponse').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var bowler = document.getElementById("bowlerBallvsVenue").value;
 var venue = document.getElementById("venueBallvsVenue").value;
 var entry = {
@@ -601,12 +616,17 @@ fetch("/ballVsVenue", {
 
 function BatvsBallVenueClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 
 $('#divBatBallVenueResponce').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var batsman = document.getElementById("batsmanBatvsBallvenue").value;
 var bowler = document.getElementById("bowlerBatvsBallvenue").value;
 var venue = document.getElementById("venueBatvsBallvenue").value;
@@ -664,11 +684,16 @@ fetch("/batVsBallInvVenue", {
 
 function BatvsTeamClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 $('#divBatvsTeamResponce').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var batsman = document.getElementById("batsmanBatvsTeam").value;
 var team = document.getElementById("TeamBatvsTeam").value;
 var entry = {
@@ -731,11 +756,16 @@ fetch("/batVsteam", {
 
 function BallvsTeamClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 randomGIF();
 $('#divBallvsTeamResponce').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var bowler = document.getElementById("bowlerBallvsTeam").value;
 var team = document.getElementById("TeamBallvsTeam").value;
 var entry = {
@@ -797,13 +827,17 @@ fetch("/ballVsteam", {
 
 function BatVsBallSmartClick()
 {
-
+var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $("#tbodyBatsmanResponce").empty();
   $("#tbodyBowlerResponce").empty();
   randomGIF();
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 
 var batsman1 = document.getElementById("batsmanBatvsBallS1").value;
 var batsman2 = document.getElementById("batsmanBatvsBallS2").value;
@@ -928,12 +962,16 @@ fetch("/selection", {
 
 function BatVsVenueSmartClick()
 {
-
+var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $("#tbodyBatsmanVenueResponce").empty();
   randomGIF();
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 
 var batsman1 = document.getElementById("team1batsman1").value;
 var batsman2 = document.getElementById("team1batsman2").value;
@@ -1036,12 +1074,16 @@ fetch("/batvsground", {
 
 function BallVsVenueSmartClick()
 {
-
+var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
 $("#tbodyBowlerVenueResponce").empty();
 randomGIF();
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 
 var bowler1 = document.getElementById("team1bowler1").value;
 var bowler2 = document.getElementById("team1bowler2").value;
@@ -1144,13 +1186,18 @@ fetch("/ballvsground", {
 
 function BatindepthClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
 
     $('#divBatIndepthResponce').addClass('hide-div');
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
 $("#tbodyBatIndepthResponce").empty();
 randomGIF();
   $('.loadingGIF').css('display', "block");
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var batsman = document.getElementById("batsmanBatindepth").value;
 var team = document.getElementById("TeamBatindepth").value;
 
@@ -1254,13 +1301,18 @@ fetch("/batindepth", {
 
 function BallindepthClick()
 {
+  var leaguage = document.getElementById("selectedLeaguage").value;
+  if (!leaguage){
+      alert('Please Select Leaguage')
+      return false;
+  }
   randomGIF();
     $('#divBallIndepthResponce').addClass('hide-div');
 
    $('body > *:not(.loadingGIF)').css('filter','blur(3px)')
   $('.loadingGIF').css('display', "block");
   
-var leaguage = document.getElementById("selectedLeaguage").value;
+//var leaguage = document.getElementById("selectedLeaguage").value;
 var bowler = document.getElementById("bowlerBallindepth").value;
 
 var entry = {
@@ -1368,6 +1420,24 @@ function hideActionDiv(){
 {% endfor %}
 </select>
 </datalist>
+
+<datalist id="TeamMasterddl" name="TeamMasterddl"> 
+<select name="TeamMasterddl" width="300px">
+{% for i in teamMaster %}
+    <option value="{{ i }}" SELECTED>{{ i }}</option>
+{% endfor %}
+</select>
+</datalist>
+
+<datalist id="VenueMasterddl" name="VenueMasterddl"> 
+<select name="VenueMasterddl" width="300px">
+{% for i in venueMaster %}
+    <option value="{{ i }}" SELECTED>{{ i }}</option>
+{% endfor %}
+</select>
+</datalist>
+
+
 <div class="loadingGIF">  
    <img src="{{ url_for ('static', filename = 'img/cricketHomeImage.jpg') }}" class="loadingGIF" style="opacity: 1;width: 30%;position: absolute;display: flex;margin-left: 36%;margin-top: 10%;justify-content: center;border: 0px;" alt="">  
 </div>
@@ -1450,7 +1520,7 @@ function hideActionDiv(){
       </td>
       <td style="vertical-align:top;">
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler In-Depth <i class="fas fa-brain" style="font-size:22px;color: yellow;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler In-Depth <i class="fas fa-brain" style="font-size:22px;color: #cc6699;"></i></label> 
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Bowler</span>
@@ -1479,7 +1549,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler Vs Venue Smart <i class="fas fa-brain" style="font-size:22px;color: yellow;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Bowler Vs Venue Smart <i class="fas fa-brain" style="font-size:22px;color: #cc6699;"></i></label> 
 </div>
 <table style="float:right; margin-top: 15px;">
   <tr>
@@ -1562,7 +1632,7 @@ function hideActionDiv(){
   </th>
  <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "venue" id="venueBallvsVenueSmart" placeholder="Enter venue name">
+    <input class="form-field" type="text" name = "venue" id="venueBallvsVenueSmart" placeholder="Enter venue name" list="VenueMasterddl">
   </td>
 </div>
 
@@ -1652,7 +1722,7 @@ function hideActionDiv(){
       </td>
       <td style="vertical-align:top;">
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman In-Depth <i class="fas fa-brain" style="font-size:22px;color: yellow;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman In-Depth <i class="fas fa-brain" style="font-size:22px;color: #cc6699;"></i></label> 
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
@@ -1660,7 +1730,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
-    <input class="form-field" type="text" name = "team" id="TeamBatindepth" placeholder="Enter Team name">
+    <input class="form-field" type="text" name = "team" id="TeamBatindepth" placeholder="Enter Team name" list="TeamMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BatindepthClick();">Submit</button>
@@ -1684,7 +1754,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Venue Smart <i class="fas fa-brain" style="font-size:22px;color: yellow;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Venue Smart <i class="fas fa-brain" style="font-size:22px;color: #cc6699;"></i></label> 
 </div>
 <table style="float:right; margin-top: 15px;">
   <tr>
@@ -1767,7 +1837,7 @@ function hideActionDiv(){
   </th>
  <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "venue" id="venueBatvsVenueSmart" placeholder="Enter venue name">
+    <input class="form-field" type="text" name = "venue" id="venueBatvsVenueSmart" placeholder="Enter venue name" list="VenueMasterddl">
   </td>
 </div>
 
@@ -1817,7 +1887,7 @@ function hideActionDiv(){
       </td>
       <td>
 <div>
-    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Bowler Smart <i class="fas fa-brain" style="font-size:22px;color: yellow;"></i></label> 
+    <label class="" style="font-size:30px;font-family: monospace; color: cornflowerblue;">Batsman Vs Bowler Smart <i class="fas fa-brain" style="font-size:22px;color: #cc6699;"></i></label> 
 </div>
 <table style="float:right; margin-top: 15px;">
   <tr>
@@ -1977,7 +2047,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
-    <input class="form-field" type="text" name = "team" id="TeamBallvsTeam" placeholder="Enter Team name">
+    <input class="form-field" type="text" name = "team" id="TeamBallvsTeam" placeholder="Enter Team name" list="TeamMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BallvsTeamClick();">Submit</button>
@@ -2058,7 +2128,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
-    <input class="form-field" type="text" name = "team" id="TeamBatvsTeam" placeholder="Enter Team name">
+    <input class="form-field" type="text" name = "team" id="TeamBatvsTeam" placeholder="Enter Team name" list="TeamMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BatvsTeamClick();">Submit</button>
@@ -2125,7 +2195,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
-    <input class="form-field" type="text" name = "venue" id="venueBatvsBallvenue" placeholder="Enter venue name">
+    <input class="form-field" type="text" name = "venue" id="venueBatvsBallvenue" placeholder="Enter venue name" list="VenueMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BatvsBallVenueClick();">Submit</button>
@@ -2251,7 +2321,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
-    <input class="form-field" type="text" name = "venue" id="venueBallvsVenue" placeholder="Enter Venue name">
+    <input class="form-field" type="text" name = "venue" id="venueBallvsVenue" placeholder="Enter Venue name" list="VenueMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BallvsVenueClick();">Submit</button>
@@ -2329,7 +2399,7 @@ function hideActionDiv(){
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
-    <input class="form-field" type="text" name = "venue" id="venueBatvsVenue" placeholder="Enter Venue name">
+    <input class="form-field" type="text" name = "venue" id="venueBatvsVenue" placeholder="Enter Venue name" list="VenueMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BatvsVenueClick();">Submit</button>

@@ -48,6 +48,8 @@ BBL_delivery_data = BBL_delivery_data.replace(np.nan, '', regex=True)
 BBL_match_data=pd.read_csv("BBL_Match_data.csv")
 
 ddl_PlayerMaster = pd.read_csv("ddlPlayerMasterData.csv")
+ddl_TeamMaster = pd.read_csv("ddlTeamMasterData.csv")
+ddl_VenueMaster = pd.read_csv("ddlVenueMasterData.csv")
 
 
 #@app.route('/home')
@@ -58,7 +60,7 @@ ddl_PlayerMaster = pd.read_csv("ddlPlayerMasterData.csv")
 @app.route('/')
 def website_home():
 		print(ddl_PlayerMaster.value.tolist())
-		return render_template('iplplayerHome.html',playerMastervelue=ddl_PlayerMaster.value.tolist(),playerMasterName=ddl_PlayerMaster.name.tolist())
+		return render_template('iplplayerHome.html',playerMastervelue=ddl_PlayerMaster.value.tolist(),playerMasterName=ddl_PlayerMaster.name.tolist(),teamMaster=ddl_TeamMaster.value.tolist(),venueMaster=ddl_VenueMaster.value.tolist())
 
 #@app.route('/batVsBall')
 #def my_form():
