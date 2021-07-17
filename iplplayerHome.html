@@ -1154,6 +1154,9 @@ var leaguage = document.getElementById("selectedLeaguage").value;
 var batsman = document.getElementById("batsmanBatindepth").value;
 var team = document.getElementById("TeamBatindepth").value;
 
+var OutputHeaderLeaguag = batsman + "'s All " + leaguage + " Performance";
+$('#spnLeagueName').html(OutputHeaderLeaguag);
+
 var entry = {
             leaguageName: leaguage,
             batsmanName: batsman,
@@ -1195,7 +1198,7 @@ fetch("/batindepth", {
           
           var batLength = Object.keys(data.teamlist).length
           var tbodybat = document.getElementById('tbodyBatIndepthResponce');
-          var batsmanTh = "<tr><span> Selected Team Against Performance</span></tr><tr><th>Bowler</th> <th> Hard-Hitting</th> <th> Runnig Between Wickets </th> <th> Out</th></tr>"
+          var batsmanTh = "<tr><span id = 'spnTeamName' style='color: black;padding: 5px;background: blanchedalmond;'> Selected Team Against Performance</span></tr><tr><th>Bowler</th> <th> Hard-Hitting</th> <th> Runnig Between Wickets </th> <th> Out</th></tr>"
           tbodybat.innerHTML += batsmanTh
           for (var i = 0; i < batLength; i++) {
              
@@ -1213,7 +1216,9 @@ fetch("/batindepth", {
               
           }
 
-          
+          var OutputHeaderTeam = batsman +  " against " +team;
+          $('#spnTeamName').html(OutputHeaderTeam);
+        //  $('#spnTeamName').css('')
           $('#divBatIndepthResponce').removeClass('hide-div');
 
         
@@ -1348,13 +1353,23 @@ else if(rndInt == 3){
 function hideActionDiv(){
   $('.ActionDiv').addClass('hide-div');
    //$('.loadingGIF').css('display', "none");
+
+
 }
 </script>
 </head>
 <body onload="hideActionDiv();">
-  
+<datalist id="playerMasterddl" name="playerMasterddl"> 
+<select name="playerMasterddl" width="300px">
+{% for i in playerMastervelue %}
+      {% set item_1 = playerMastervelue[loop.index-1] %}
+      {% set item_2 = playerMasterName[loop.index-1] %}
+    <option value="{{ item_1 }}" SELECTED>{{ item_2 }}</option>
+{% endfor %}
+</select>
+</datalist>
 <div class="loadingGIF">  
-   <img src="{{ url_for ('static', filename = 'img/1.gif') }}" class="loadingGIF" style="opacity: 1;width: 30%;position: absolute;display: flex;margin-left: 36%;margin-top: 10%;justify-content: center;" alt="">  
+   <img src="{{ url_for ('static', filename = 'img/cricketHomeImage.jpg') }}" class="loadingGIF" style="opacity: 1;width: 30%;position: absolute;display: flex;margin-left: 36%;margin-top: 10%;justify-content: center;border: 0px;" alt="">  
 </div>
 	<form>
 		<div id="leagueSelect" style="height: 50px;float: left;">
@@ -1390,7 +1405,7 @@ function hideActionDiv(){
    <table>
     <tr>
       <td>
-        <div id="divBallIndepthResponce" class="hide-div" style="padding-right: 30px;margin-top: -100px;">
+        <div id="divBallIndepthResponce" class="hide-div" style="padding-right: 30px;margin-top: 70px;">
           
             <table id = "batvsballResponseTable">
               <tr> 
@@ -1439,7 +1454,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Bowler</span>
-    <input class="form-field" type="text" name = "bowler" id="bowlerBallindepth" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBallindepth" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
   <button type="button" class="span-header" onclick="BallindepthClick();">Submit</button>
@@ -1482,60 +1497,60 @@ function hideActionDiv(){
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team1bowler1" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team1bowler1" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team2bowler1" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team2bowler1" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team1bowler2" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team1bowler2" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team2bowler2" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team2bowler2" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team1bowler3" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team1bowler3" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team2bowler3" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team2bowler3" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team1bowler4" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team1bowler4" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team2bowler4" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team2bowler4" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team1bowler5" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team1bowler5" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="team2bowler5" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="team2bowler5" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
@@ -1576,7 +1591,7 @@ function hideActionDiv(){
         <div id="divBatIndepthResponce" class="hide-div" style="padding-right: 30px;margin-top: -100px;">
            <table>
             <tr>
-              <span style="color: black;padding: 5px;background: blanchedalmond;">
+              <span id="spnLeagueName" style="color: black;padding: 5px;background: blanchedalmond;">
                 Selected Leaguage Performance
               </span>
             </tr>
@@ -1641,7 +1656,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatindepth" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatindepth" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
@@ -1687,60 +1702,60 @@ function hideActionDiv(){
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team1batsman1" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team1batsman1" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team2batsman1" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team2batsman1" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team1batsman2" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team1batsman2" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team2batsman2" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team2batsman2" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team1batsman3" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team1batsman3" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team2batsman3" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team2batsman3" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team1batsman4" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team1batsman4" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team2batsman4" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team2batsman4" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team1batsman5" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team1batsman5" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="team2batsman5" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="team2batsman5" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 </tr>
@@ -1820,72 +1835,72 @@ function hideActionDiv(){
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS1" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS1" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS1" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS1" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS2" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS2" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS2" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS2" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS3" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS3" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS3" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS3" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS4" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS4" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS4" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS4" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS5" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS5" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS5" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS5" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
 <tr>
   <td>
     <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS6" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallS6" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 </td>
 <td>
   <div class="form-group" style="margin-top:10px;">
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS6" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallS6" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 </td>
 </tr>
@@ -1958,7 +1973,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Bowler</span>
-    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsTeam" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsTeam" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
@@ -2039,7 +2054,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsTeam" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsTeam" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Team</span>
@@ -2102,11 +2117,11 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallvenue" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBallvenue" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Bowler</span>
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallvenue" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBallvenue" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
@@ -2165,11 +2180,11 @@ function hideActionDiv(){
 </div>
 	<div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBall" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsBall" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
 	 <span>Bowler</span>
-    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBall" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBatvsBall" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
 	<button type="button" class="span-header" onclick="BatvsBallClick();">Submit</button>
@@ -2232,7 +2247,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Bowler</span>
-    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsVenue" placeholder="Enter bowler name">
+    <input class="form-field" type="text" name = "bowler" id="bowlerBallvsVenue" placeholder="Enter bowler name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
@@ -2310,7 +2325,7 @@ function hideActionDiv(){
 </div>
   <div class="form-group" style="margin-top:10px;">
     <span>Batsman</span>
-    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsVenue" placeholder="Enter batsman name">
+    <input class="form-field" type="text" name = "batsman" id="batsmanBatvsVenue" placeholder="Enter batsman name" list="playerMasterddl">
 </div>
 <div class="form-group" style="margin-top:7px;">
    <span>Venue</span>
@@ -2346,10 +2361,10 @@ function hideActionDiv(){
   </tr>
 	<tr>
 		<td>
-<button type="button" class="simple" id="manualBatvsBall" title="Batsman vs Bowler" onclick="showMydiv('divBatBall');"><img src="{{ url_for ('static', filename = 'img/BatBall.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+<button type="button" class="simple" id="manualBatvsBall" title="Batsman vs Bowler" style="padding-top: 0px;margin-top: 0px;" onclick="showMydiv('divBatBall');"><img src="{{ url_for ('static', filename = 'img/BatBall.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
-<button type="button" class="fill" id="smartBatvsBall" title="Smart Batsman vs Bowler" onclick="showMydiv('divBallvsBatSmart');">Bat-Ball</button>
+<button type="button" class="fill" id="smartBatvsBall" title="Smart Batsman vs Bowler" style="padding-top: 0px;margin-top: 0px;" onclick="showMydiv('divBallvsBatSmart');"><img src="{{ url_for ('static', filename = 'img/SmartBatvsBall.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 
 
@@ -2357,39 +2372,39 @@ function hideActionDiv(){
 </tr>
 <tr>
 		<td>
-<button type="button" title="Batsman vs Venue" class="simple" id="manualBatvsVenue" onclick="showMydiv('divBatvsVenue');"><img src="{{ url_for ('static', filename = 'img/BatVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+<button type="button" title="Batsman vs Venue" class="simple" style="padding-top: 0px;margin-top: 0px;" id="manualBatvsVenue" onclick="showMydiv('divBatvsVenue');"><img src="{{ url_for ('static', filename = 'img/BatVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
-<td>
-<button type="button" title="Batsman vs Venue Smart" class="fill" id="smartBatvsVenue" onclick="showMydiv('divBatVsVenueSmart');">Bat-Venue</button>
-</td>
-</tr>
-<tr>
-		<td>
-<button type="button" class="simple" title="Bowler vs Venue" id="manualBallvsVenue" onclick="showMydiv('divBallvsVenue');"><img src="{{ url_for ('static', filename = 'img/BallVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
-</td>
-<td>
-<button type="button" class="fill" title="Bowler vs Venue Smart" id="smartBallvsVenue" onclick="showMydiv('divBallVsVenueSmart');">Ball-Venue</button>
+<td> 
+<button type="button" title="Batsman vs Venue Smart" class="fill" style="padding-top: 0px;margin-top: 0px;" id="smartBatvsVenue" onclick="showMydiv('divBatVsVenueSmart');"><img src="{{ url_for ('static', filename = 'img/SmartBatvsVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple" title="Batsman vs Bowler in Venue" id="manualBatBallvsVenue" onclick="showMydiv('divBatBallVenue');"><img src="{{ url_for ('static', filename = 'img/AllFinal.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+<button type="button" class="simple" title="Bowler vs Venue" style="padding-top: 0px;margin-top: 0px;" id="manualBallvsVenue" onclick="showMydiv('divBallvsVenue');"><img src="{{ url_for ('static', filename = 'img/BallVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
-<button type="button" class="fill" title="Batsman indepth" id="smartBatindepth" onclick="showMydiv('divBatIndepth');">Bat-Indepth</button>
+<button type="button" class="fill" title="Bowler vs Venue Smart" style="padding-top: 0px;margin-top: 0px;" id="smartBallvsVenue" onclick="showMydiv('divBallVsVenueSmart');"><img src="{{ url_for ('static', filename = 'img/SmartBallvsVenue.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple" title="Batsman vs Team" id="manualBatvsTeam" onclick="showMydiv('divBatvsTeam');"><img src="{{ url_for ('static', filename = 'img/BatTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+<button type="button" class="simple" title="Batsman vs Bowler in Venue" style="padding-top: 0px;margin-top: 0px;" id="manualBatBallvsVenue" onclick="showMydiv('divBatBallVenue');"><img src="{{ url_for ('static', filename = 'img/AllFinal.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
-<button type="button" class="fill" title="Bowler indepth" id="smartBallindepth" onclick="showMydiv('divBallIndepth');">Ball-Indepth</button>
+<button type="button" class="fill" title="Batsman indepth" id="smartBatindepth" style="padding-top: 0px;margin-top: 0px;" onclick="showMydiv('divBatIndepth');"><img src="{{ url_for ('static', filename = 'img/SmartBatindepth.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 </tr>
 <tr>
 		<td>
-<button type="button" class="simple" title="Bowler vs Team" id="manualBallvsTeam" onclick="showMydiv('divBallvsTeam');"><img src="{{ url_for ('static', filename = 'img/BallTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+<button type="button" class="simple" title="Batsman vs Team" style="padding-top: 0px;margin-top: 0px;" id="manualBatvsTeam" onclick="showMydiv('divBatvsTeam');"><img src="{{ url_for ('static', filename = 'img/BatTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+</td>
+<td>
+<button type="button" class="fill" title="Bowler indepth" style="padding-top: 0px;margin-top: 0px;" id="smartBallindepth" onclick="showMydiv('divBallIndepth');"><img src="{{ url_for ('static', filename = 'img/smartBallindepth.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
+</td>
+</tr>
+<tr>
+		<td>
+<button type="button" class="simple" title="Bowler vs Team" style="padding-top: 0px;margin-top: 0px;" id="manualBallvsTeam" onclick="showMydiv('divBallvsTeam');"><img src="{{ url_for ('static', filename = 'img/BallTeam.PNG') }}" style="opacity: 1 !important;height: 35px;width: 60px;padding: 0px;border: 0px;margin-top: 10px;"></button>
 </td>
 <td>
 <button type="button" class="fill">---</button>
@@ -2401,4 +2416,4 @@ function hideActionDiv(){
 
 </form>
 </body>
-</html
+</html>

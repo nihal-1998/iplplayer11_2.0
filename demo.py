@@ -42,20 +42,28 @@ T20_delivery_data=pd.read_csv("international t20 ballbyball.csv")
 T20_delivery_data = T20_delivery_data.replace(np.nan, '', regex=True)
 T20_match_data=pd.read_csv("T20_match_data.csv")
 
-@app.route('/home')
-def website_home_1():
-		return render_template('iplplayerHome.html')
+
+BBL_delivery_data=pd.read_csv("BBL_BallByBall_data.csv")
+BBL_delivery_data = BBL_delivery_data.replace(np.nan, '', regex=True)
+BBL_match_data=pd.read_csv("BBL_Match_data.csv")
+
+ddl_PlayerMaster = pd.read_csv("ddlPlayerMasterData.csv")
+
+
+#@app.route('/home')
+#def website_home_1():
+     
+#		return render_template('iplplayerHome.html',playerMastervelue=ddl_PlayerMaster.value.tolist(),playerMasterName=ddl_PlayerMaster.name.tolist())
 
 @app.route('/')
 def website_home():
-		return render_template('iplplayerHome.html')
+		print(ddl_PlayerMaster.value.tolist())
+		return render_template('iplplayerHome.html',playerMastervelue=ddl_PlayerMaster.value.tolist(),playerMasterName=ddl_PlayerMaster.name.tolist())
 
 #@app.route('/batVsBall')
 #def my_form():
 		
 #		return render_template('imagebat.html')
-
-
 
 
 @app.route('/batVsBall', methods=['POST'])		
@@ -77,6 +85,9 @@ def home():
 				elif (leaguage=='T20i'):
 					print('int20i')
 					batsman_data_1=T20_delivery_data[(T20_delivery_data.batsman==name)&(T20_delivery_data.bowler==name2)]
+				elif (leaguage=='BBL'):
+					print('inbbl')
+					batsman_data_1=BBL_delivery_data[(BBL_delivery_data.batsman==name)&(BBL_delivery_data.bowler==name2)]
 				if(leaguage!='IPL'):
 					balls=len(batsman_data_1[(batsman_data_1.extra_runs==0)])
 				else:
@@ -149,6 +160,10 @@ def home_2():
 					print('int20i')
 					bowler_data=T20_delivery_data[(T20_delivery_data.bowler==name)]
 					match_data1 = T20_match_data[(T20_match_data.venue==name2)]
+				elif (leaguage=='BBL'):
+					bowler_data=BBL_delivery_data[(BBL_delivery_data.bowler==name)]
+					match_data1 = BBL_match_data[(BBL_match_data.venue==name2)]
+						
 
 				bowling_first = list()
 				#name = request.form['bowler']
@@ -256,6 +271,10 @@ def home_1():
 					print('int20i')
 					batsman_data=T20_delivery_data[(T20_delivery_data.batsman==name)]
 					match_data1 = T20_match_data[(T20_match_data.venue==name2)]
+				elif (leaguage=='BBL'):
+					batsman_data=BBL_delivery_data[(BBL_delivery_data.batsman==name)]
+					match_data1 = BBL_match_data[(BBL_match_data.venue==name2)]
+				   	
 
 
 				batting_first = list()
@@ -381,6 +400,10 @@ def home_3():
 					print('int20i')
 					batsman_data_1=T20_delivery_data[(T20_delivery_data.batsman==name)&(T20_delivery_data.bowler==name2)]
 					match_data1 = T20_match_data[(T20_match_data.venue==name3)]
+				elif (leaguage=='BBL'):
+					batsman_data_1=BBL_delivery_data[(BBL_delivery_data.batsman==name)&(BBL_delivery_data.bowler==name2)]
+					match_data1 = BBL_match_data[(BBL_match_data.venue==name3)]
+					
 
 				batting_first = list()
 				#name = request.form['batsman']
@@ -479,6 +502,8 @@ def home_4():
 				elif (leaguage=='T20i'):
 					print('int20i')
 					batsman_data=T20_delivery_data[(T20_delivery_data.batsman==name)&(T20_delivery_data.bowling_team==name2)]
+				elif (leaguage=='BBL'):
+					batsman_data=BBL_delivery_data[(BBL_delivery_data.batsman==name)&(BBL_delivery_data.bowling_team==name2)]
 				
 
 				batting_first = list()
@@ -589,6 +614,9 @@ def home_5():
 				elif (leaguage=='T20i'):
 					print('int20i')
 					bowler_data=T20_delivery_data[(T20_delivery_data.bowler==name)&(T20_delivery_data.batting_team==name2)]
+				elif (leaguage=='BBL'):
+					print('int20i')
+					bowler_data=BBL_delivery_data[(BBL_delivery_data.bowler==name)&(BBL_delivery_data.batting_team==name2)]	
 
 				bowling_first = list()
 				#name = request.form['bowler']
@@ -692,24 +720,27 @@ def home_7():
 					for y in b:
 						if(leaguage=='IPL'):
 							batsman_data_1=delivery_data[(delivery_data.batsman==i)&(delivery_data.bowler==y)]
+							batsman_data_full=delivery_data[(delivery_data.batsman==i)]
+							out = len(delivery_data.player_dismissed==i)
+							bowler_data_full = delivery_data[(delivery_data.bowler==y)]
 						elif (leaguage=='T20i'):
 							batsman_data_1=T20_delivery_data[(T20_delivery_data.batsman==i)&(T20_delivery_data.bowler==y)]
-					
+							batsman_data_full=T20_delivery_data[(T20_delivery_data.batsman==i)]
+							out = len(T20_delivery_data.player_dismissed==i)
+							bowler_data_full = T20_delivery_data[(T20_delivery_data.bowler==y)]
+						elif (leaguage=='BBL'):
+							batsman_data_1=BBL_delivery_data[(BBL_delivery_data.batsman==i)&(BBL_delivery_data.bowler==y)]
+							batsman_data_full=BBL_delivery_data[(BBL_delivery_data.batsman==i)]
+							out = len(BBL_delivery_data.player_dismissed==i)
+							bowler_data_full = BBL_delivery_data[(BBL_delivery_data.bowler==y)]	
+							
+
 						#batsman_data_1=delivery_data[(delivery_data.batsman==i)&(delivery_data.bowler==y)]
 
-						if(leaguage=='IPL'):
-							batsman_data_full=delivery_data[(delivery_data.batsman==i)]
-						elif (leaguage=='T20i'):
-							batsman_data_full=T20_delivery_data[(T20_delivery_data.batsman==i)]
-	               
+						
 						#batsman_data_full = delivery_data[(delivery_data.batsman==i)]
 						runs_full = batsman_data_full.batsman_runs.sum()
 
-
-						if(leaguage=='IPL'):
-							out = len(delivery_data.player_dismissed==i)
-						elif (leaguage=='T20i'):
-							out = len(T20_delivery_data.player_dismissed==i)
 
 						#out = len(delivery_data.player_dismissed==i)
 						batsman_average = runs_full/out # batsman batting average 
@@ -724,11 +755,6 @@ def home_7():
 							batsman_average_bowler = runs
 
 
-						if(leaguage=='IPL'):
-							bowler_data_full = T20_delivery_data[(T20_delivery_data.bowler==y)]
-						elif (leaguage=='T20i'):
-							bowler_data_full = delivery_data[(delivery_data.bowler==y)]
-						
 						#bowler_data_full = delivery_data[(delivery_data.bowler==y)]
 						runs_bowler = bowler_data_full.total_runs.sum()
 						outs1=0
@@ -816,6 +842,8 @@ def home_8():
 					#out = len(delivery_data.player_dismissed==i)
 				elif (leaguage=='T20i'):
 					match_data_1_1 = T20_match_data[(T20_match_data.venue==name2)]
+				elif (leaguage=='BBL'):
+					match_data_1_1 = BBL_match_data[(BBL_match_data.venue==name2)]	
 					#out = len(T20_delivery_data.player_dismissed==i)
 
 
@@ -830,6 +858,9 @@ def home_8():
 						elif (leaguage=='T20i'):
 							batsman_data = T20_delivery_data[(T20_delivery_data.batsman==i)]
 							match_data1 = T20_match_data[(T20_match_data.venue==name2)]
+						elif (leaguage=='BBL'):
+							batsman_data = BBL_delivery_data[(BBL_delivery_data.batsman==i)]
+							match_data1 = BBL_match_data[(BBL_match_data.venue==name2)]	
 
 						for venue in match_data1.venue.unique():
 								matches=match_data1[(match_data1.venue==venue)].id
@@ -926,6 +957,8 @@ def home_9():
 					#out = len(delivery_data.player_dismissed==i)
 				elif (leaguage=='T20i'):
 					match_data_1_1 = T20_match_data[(T20_match_data.venue==name2)]
+				elif (leaguage=='BBL'):
+					match_data_1_1 = BBL_match_data[(BBL_match_data.venue==name2)]	
 
 				if len(match_data_1_1)>0:
 					for i in d:
@@ -936,6 +969,10 @@ def home_9():
 						elif (leaguage=='T20i'):
 							bowler_data = T20_delivery_data[(T20_delivery_data.bowler==i)]
 							match_data1 = T20_match_data[(T20_match_data.venue==name2)]
+						elif (leaguage=='BBL'):
+							bowler_data = BBL_delivery_data[(BBL_delivery_data.bowler==i)]
+							match_data1 = BBL_match_data[(BBL_match_data.venue==name2)]
+	
 
 						#bowler_data = delivery_data[(delivery_data.bowler==i)]
 						#match_data1 = match_data[(match_data.venue==name2)]
@@ -1032,6 +1069,8 @@ def my_home_10():
 					batsman_data_2 = delivery_data[(delivery_data.batsman==i)]
 				elif(leaguage=='T20i'):
 					batsman_data_2 = T20_delivery_data[(T20_delivery_data.batsman==i)]
+				elif(leaguage=='BBL'):
+					batsman_data_2 = BBL_delivery_data[(BBL_delivery_data.batsman==i)]	
 						
 				if len(batsman_data_2)>0: 
 					if(leaguage=='IPL'):
@@ -1051,6 +1090,15 @@ def my_home_10():
 						average2 = batsman_data_2.batsman_runs.sum()/len(T20_delivery_data[T20_delivery_data.player_dismissed==i])
 						runningBW2 = ((batsman_data_2.batsman_runs.sum())-((4*len(batsman_data_2[batsman_data_2.batsman_runs==4]))+(6*len(batsman_data_2[batsman_data_2.batsman_runs==6]))))/len(batsman_data_2[(batsman_data_2.batsman_runs!=4)&(batsman_data_2.batsman_runs!=6)&(batsman_data_2.extra_runs==0)])
 						batsman2 = batsman2 + [[i,hardhitting2,finisher2,fastscore2,average2,runningBW2]]
+
+					elif(leaguage=='BBL'):
+						batsman_data_2 = BBL_delivery_data[(BBL_delivery_data.batsman==i)]
+						hardhitting2 = ((4*len(batsman_data_2[batsman_data_2.batsman_runs==4]))+(6*len(batsman_data_2[batsman_data_2.batsman_runs==6])))/len(batsman_data_2[(batsman_data_2.extra_runs==0)])
+						finisher2 = ((len(batsman_data_2.match_id.unique())-len(BBL_delivery_data[BBL_delivery_data.player_dismissed==i])))/len(BBL_delivery_data.match_id.unique())
+						fastscore2 = batsman_data_2.batsman_runs.sum()/len(batsman_data_2[(batsman_data_2.extra_runs==0)])
+						average2 = batsman_data_2.batsman_runs.sum()/len(BBL_delivery_data[BBL_delivery_data.player_dismissed==i])
+						runningBW2 = ((batsman_data_2.batsman_runs.sum())-((4*len(batsman_data_2[batsman_data_2.batsman_runs==4]))+(6*len(batsman_data_2[batsman_data_2.batsman_runs==6]))))/len(batsman_data_2[(batsman_data_2.batsman_runs!=4)&(batsman_data_2.batsman_runs!=6)&(batsman_data_2.extra_runs==0)])
+						batsman2 = batsman2 + [[i,hardhitting2,finisher2,fastscore2,average2,runningBW2]]	
 					
 
 					for y in name2:
@@ -1058,6 +1106,8 @@ def my_home_10():
 							batsman_data_1 = delivery_data[(delivery_data.batsman==i)&(delivery_data.bowler==y)]
 						elif(leaguage=='T20i'):
 							batsman_data_1 = T20_delivery_data[(T20_delivery_data.batsman==i)&(T20_delivery_data.bowler==y)]
+						elif(leaguage=='BBL'):
+							batsman_data_1 = BBL_delivery_data[(BBL_delivery_data.batsman==i)&(BBL_delivery_data.bowler==y)]	
 								
 						if len(batsman_data_1)>0:
 							if(leaguage=='IPL'):
@@ -1068,7 +1118,7 @@ def my_home_10():
 								# average = batsman_data_1.batsman_runs.sum()/len(batsman_data_1[batsman_data_1.player_dismissed==i])
 								runningBW = ((batsman_data_1.batsman_runs.sum())-((4*len(batsman_data_1[batsman_data_1.batsman_runs==4]))+(6*len(batsman_data_1[batsman_data_1.batsman_runs==6]))))/len(batsman_data_1[(batsman_data_1.batsman_runs!=4)&(batsman_data_1.batsman_runs!=6)&(batsman_data_1.noball_runs==0)&(batsman_data_1.wide_runs==0)])
 								batsman = batsman + [[i,y,hardhitting,runningBW,out]]
-							elif(leaguage=='T20i'):
+							else:
 								out = len(batsman_data_1[(batsman_data_1.player_dismissed==i)&(batsman_data_1.dismissal_kind!='run out')])
 								hardhitting = ((4*len(batsman_data_1[batsman_data_1.batsman_runs==4]))+(6*len(batsman_data_1[batsman_data_1.batsman_runs==6])))/len(batsman_data_1[(batsman_data_1.extra_runs==0)])
 								# finisher = ((len(batsman_data_1.match_id.unique())-len(batsman_data_1[batsman_data_1.player_dismissed==i])))/len(batsman_data_1.match_id.unique())
@@ -1076,6 +1126,7 @@ def my_home_10():
 								# average = batsman_data_1.batsman_runs.sum()/len(batsman_data_1[batsman_data_1.player_dismissed==i])
 								runningBW = ((batsman_data_1.batsman_runs.sum())-((4*len(batsman_data_1[batsman_data_1.batsman_runs==4]))+(6*len(batsman_data_1[batsman_data_1.batsman_runs==6]))))/len(batsman_data_1[(batsman_data_1.batsman_runs!=4)&(batsman_data_1.batsman_runs!=6)&(batsman_data_1.extra_runs==0)])
 								batsman = batsman + [[i,y,hardhitting,runningBW,out]]
+
 									
 						else:
 							hardhitting = 0 
@@ -1132,6 +1183,10 @@ def my_home_11():
 					bowler_data = T20_delivery_data[T20_delivery_data.bowler==a]	
 					t=bowler_data.total_runs.sum()
 					balls=len(bowler_data[(bowler_data.extra_runs==0)])
+				elif(leaguage=='BBL'):
+					bowler_data = BBL_delivery_data[BBL_delivery_data.bowler==a]	
+					t=bowler_data.total_runs.sum()
+					balls=len(bowler_data[(bowler_data.extra_runs==0)])	
 
 				print(bowler_data)
 				innings = len(bowler_data.match_id.unique())
